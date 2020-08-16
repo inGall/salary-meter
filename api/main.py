@@ -108,7 +108,7 @@ def getTimeWorkedForTheDay(work_timings):
         `worked_time`: Total worked time
     """
     curr_date = datetime.now()
-    time = curr_date.hour + (curr_date.minute / 60)
+    time = curr_date.hour + (curr_date.minute / 60) - 6
     # time = test_time  # Remove comment from this line for testing
     start_time, break_start_time, break_end_time, break_time, end_time = work_timings
     print("Current time now is:", curr_date.hour, ":", curr_date.minute)

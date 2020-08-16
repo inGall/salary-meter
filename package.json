@@ -11,6 +11,7 @@
     "react-scripts": "3.4.3"
   },
   "scripts": {
+    "app": "concurrently \"npm start\" \"yarn start-api\"",
     "start": "react-scripts start",
     "start-api": "cd api && venv/Scripts/flask run --no-debugger",
     "build": "react-scripts build",
