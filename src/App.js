@@ -1,32 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
-function App() {
-  const [currentTime, setCurrentTime] = useState(0);
+import Information from './Information';
+import Salarymeter from './Salarymeter';
 
-  useEffect(() => {
-    fetch('/time')
-      .then((res) => res.json())
-      .then((data) => {
-        setCurrentTime(data);
-      });
-  }, []);
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      info: [],
+    };
+  }
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-        <p>Your current salary is {currentTime}</p>
-      </header>
-    </div>
-  );
+  getInfo = (sal, cpf, sw, ew, sb, eb) => {
+    this.setState({
+      info: [sal, cpf, sw, ew, sb, eb],
+    });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <Information handleSubmit={this.getInfo}></Information>
+        <Salarymeter info={this.state.info} />
+      </div>
+    );
+  }
 }
 
 export default App;
