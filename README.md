@@ -2,6 +2,14 @@
 
 A simple web dashboard for computing current salary earned in the month
 
+### Usage
+
+1. Clone repository to local directory
+2. `npm install` to install all dependencies
+3. `pip install flask` and `pip install flask_cors` to get both packages
+4. `npm run app` to run app under localhost:3000
+5. Fill in information and you are ready to go!
+
 ### Background Information
 
 1. Salary updates every minute.
