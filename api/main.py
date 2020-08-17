@@ -1,6 +1,6 @@
 import calendar, time
 from datetime import datetime
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -110,7 +110,7 @@ def getTodayInformation():
                 if i < 5:
                     workingdays_passed += 1
             # Replace curr_date.day with test_date for testing
-            if curr_day == test_date:
+            if curr_day == curr_date.day:
                 if i < 5:
                     workingdays_passed -= 1
                     is_weekday = True
@@ -131,7 +131,7 @@ def getTimeWorkedForTheDay(work_timings):
     """
     curr_date = datetime.now()
     # Adjust time now by adding / subtracting to working hours
-    time = curr_date.hour + (curr_date.minute / 60) - 4
+    time = curr_date.hour + (curr_date.minute / 60)
     start_time, end_time, break_start_time, break_end_time, break_time, working_hours = (
         work_timings
     )
