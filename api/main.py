@@ -10,19 +10,14 @@ CORS(app)
 total_sal_per_month = 10000
 cpf_rate = 0.8
 work_start_time = "0930"
+work_end_time = "1900"
 work_break_start_time = "1230"
 work_break_end_time = "1400"
-work_end_time = "1900"
-
+test_date = 7
 
 # Initialize remaining variables
-# total_net_sal = total_sal_per_month * cpf_rate
 curr_salary = 0
 total_working_hours = 8
-
-# Test values
-test_date = 7
-test_time = 13.5
 
 
 @app.route("/post", methods=["POST"])
@@ -41,7 +36,7 @@ def poster():
 @app.route("/get")
 def start():
     work_timings = getWorkTimings(
-        work_start_time, work_break_start_time, work_break_end_time, work_end_time
+        work_start_time, work_end_time, work_break_start_time, work_break_end_time
     )
     num_weekdays = getNumWeekDaysInTheMonth()
     total_net_sal = total_sal_per_month * cpf_rate
@@ -53,24 +48,24 @@ def start():
     return curr_sal
 
 
-def getWorkTimings(wst, wbst, wbet, wet):
+def getWorkTimings(wst, wet, wbst, wbet):
     """ Returns all work timings as specified from user in decimal 
     Parameters:
     ----------
         `wst`:  work_start_time
+        `wet`:  work_end_time
         `wbst`: work_break_start_time
         `wbet`: work_break_end_time
-        `wet`:  work_end_time
     Returns:
     ----------
         `[start_time, break_start_time, break_end_time, break_time, end_time]`: Array containing all the timings
     """
     start_time = int(wst[:2]) + int(wst[2:]) / 60
+    end_time = int(wet[:2]) + int(wet[2:]) / 60
     break_start_time = int(wbst[:2]) + int(wbst[2:]) / 60
     break_end_time = int(wbet[:2]) + int(wbet[2:]) / 60
     break_time = break_end_time - break_start_time
-    end_time = int(wet[:2]) + int(wet[2:]) / 60
-    return [start_time, break_start_time, break_end_time, break_time, end_time]
+    return [start_time, end_time, break_start_time, break_end_time, break_time]
 
 
 def getNumWeekDaysInTheMonth():
@@ -127,9 +122,9 @@ def getTimeWorkedForTheDay(work_timings):
         `worked_time`: Total worked time
     """
     curr_date = datetime.now()
+    # Adjust time now by adding / subtracting to working hours
     time = curr_date.hour + (curr_date.minute / 60) - 4
-    # time = test_time  # Remove comment from this line for testing
-    start_time, break_start_time, break_end_time, break_time, end_time = work_timings
+    start_time, end_time, break_start_time, break_end_time, break_time = work_timings
     print("Current time now is:", curr_date.hour, ":", curr_date.minute)
     if time < start_time:
         worked_time = 0
@@ -160,4 +155,3 @@ def getAccumulatedSalary(num_weekdays, work_timings, sal_per_hour, total_net_sal
     print("Current salary:", format(curr_sal, ".2f"))
     print("----------------------------------------------------------------------")
     return format(curr_sal, ".2f")
-

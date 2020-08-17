@@ -16,7 +16,7 @@ function Salarymeter(props) {
       .then((data) => {
         cal_work_info(data);
       });
-  });
+  }, [props.info]);
 
   useEffect(() => {
     fetch('/get')
@@ -33,10 +33,6 @@ function Salarymeter(props) {
       <p>Your current salary is {work_info}</p>
     </div>
   );
-}
-
-function test1() {
-  return new Date().getMinutes();
 }
 
 export default Salarymeter;
