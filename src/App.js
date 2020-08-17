@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      info: [0, 0, '0000', '0000', '0000', '0000'],
+      info: [0, 0, '0000', '0000', '0000', '0100'],
     };
   }
 

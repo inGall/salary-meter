@@ -17,5 +17,5 @@ A simple web dashboard for computing current salary earned in the month
 
 #### Points to note:
 
-1. If there is no CPF, put it as 1 (**DO NOT** PUT IT AS 0)
+1. If there is no CPF, put it as **0**
 2. Program might not transit well between every month, simply just refresh system to get updated value.

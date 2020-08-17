@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 function Salarymeter(props) {
+  var info = props.info;
   const [work_info, cal_work_info] = useState(0);
 
   useEffect(() => {
@@ -16,7 +17,7 @@ function Salarymeter(props) {
       .then((data) => {
         cal_work_info(data);
       });
-  }, [props.info]);
+  }, [info]);
 
   useEffect(() => {
     fetch('/get')
@@ -25,8 +26,6 @@ function Salarymeter(props) {
         cal_work_info(data);
       });
   });
-
-  var info = props.info;
 
   return (
     <div className="salarymeter-container">
