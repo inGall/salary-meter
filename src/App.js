@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      info: [],
+      info: [0, 0, 0, 0, 0, 0],
     };
   }
 
@@ -17,6 +17,20 @@ class App extends React.Component {
       info: [sal, cpf, sw, ew, sb, eb],
     });
   };
+
+  tick() {
+    this.setState((state) => ({
+      seconds: state.seconds + 1,
+    }));
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => this.tick(), 30000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
   render() {
     return (

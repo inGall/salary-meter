@@ -1,27 +1,42 @@
 import React, { useState, useEffect } from 'react';
 
 function Salarymeter(props) {
-  const [currentTime, setCurrentTime] = useState(0);
+  const [work_info, cal_work_info] = useState(0);
 
   useEffect(() => {
-    fetch('/time')
+    fetch('/post', {
+      method: 'POST',
+      cache: 'no-cache',
+      headers: {
+        content_type: 'application/json',
+      },
+      body: JSON.stringify(info),
+    })
       .then((res) => res.json())
       .then((data) => {
-        setCurrentTime(data);
+        cal_work_info(data);
       });
-  }, []);
+  });
+
+  useEffect(() => {
+    fetch('/get')
+      .then((res) => res.json())
+      .then((data) => {
+        cal_work_info(data);
+      });
+  });
+
+  var info = props.info;
 
   return (
     <div className="salarymeter-container">
-      <p>Your current salary is {currentTime}</p>
-      <p>sal: {props.info[0]}</p>
-      <p>cpf: {props.info[1]}</p>
-      <p>sw: {props.info[2]}</p>
-      <p>ew: {props.info[3]}</p>
-      <p>sb: {props.info[4]}</p>
-      <p>eb: {props.info[5]}</p>
+      <p>Your current salary is {work_info}</p>
     </div>
   );
+}
+
+function test1() {
+  return new Date().getMinutes();
 }
 
 export default Salarymeter;

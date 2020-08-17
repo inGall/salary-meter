@@ -1,36 +1,55 @@
 import calendar, time
 from datetime import datetime
-from flask import Flask
+from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
-# Variables to be filled in by user
+# Test Variables
 total_sal_per_month = 10000
 cpf_rate = 0.8
 work_start_time = "0930"
 work_break_start_time = "1230"
 work_break_end_time = "1400"
 work_end_time = "1900"
-total_working_hours = 8
+
 
 # Initialize remaining variables
-total_net_sal = total_sal_per_month * cpf_rate
+# total_net_sal = total_sal_per_month * cpf_rate
 curr_salary = 0
+total_working_hours = 8
 
 # Test values
 test_date = 7
 test_time = 13.5
 
 
-@app.route("/time")
+@app.route("/post", methods=["POST"])
+def poster():
+    global total_sal_per_month, cpf_rate, work_start_time, work_end_time, work_break_start_time, work_break_end_time
+    info = request.json
+    total_sal_per_month = int(info[0])
+    cpf_rate = 1.0 - int(info[1]) / 100.0
+    work_start_time = info[2]
+    work_end_time = info[3]
+    work_break_start_time = info[4]
+    work_break_end_time = info[5]
+    return start()
+
+
+@app.route("/get")
 def start():
     work_timings = getWorkTimings(
         work_start_time, work_break_start_time, work_break_end_time, work_end_time
     )
     num_weekdays = getNumWeekDaysInTheMonth()
+    total_net_sal = total_sal_per_month * cpf_rate
     sal_per_hour = total_net_sal / num_weekdays / total_working_hours
-    print("Salary per day: $", format(sal_per_hour, ".2f"))
-    curr_sal = getAccumulatedSalary(num_weekdays, work_timings, sal_per_hour)
+    print("Salary per day: $", format(sal_per_hour * 8, ".2f"))
+    curr_sal = getAccumulatedSalary(
+        num_weekdays, work_timings, sal_per_hour, total_net_sal
+    )
     return curr_sal
 
 
@@ -88,7 +107,7 @@ def getTodayInformation():
                 if i < 5:
                     workingdays_passed += 1
             # Replace curr_date.day with test_date for testing
-            if curr_day == curr_date.day:
+            if curr_day == test_date:
                 if i < 5:
                     workingdays_passed -= 1
                     is_weekday = True
@@ -108,7 +127,7 @@ def getTimeWorkedForTheDay(work_timings):
         `worked_time`: Total worked time
     """
     curr_date = datetime.now()
-    time = curr_date.hour + (curr_date.minute / 60) - 6
+    time = curr_date.hour + (curr_date.minute / 60) - 4
     # time = test_time  # Remove comment from this line for testing
     start_time, break_start_time, break_end_time, break_time, end_time = work_timings
     print("Current time now is:", curr_date.hour, ":", curr_date.minute)
@@ -123,7 +142,7 @@ def getTimeWorkedForTheDay(work_timings):
     return worked_time
 
 
-def getAccumulatedSalary(num_weekdays, work_timings, sal_per_hour):
+def getAccumulatedSalary(num_weekdays, work_timings, sal_per_hour, total_net_sal):
     """ Calculate salary earned at the current point of time. For now accuracy is up to minutes, meaning new salary only updates every minute. Future improvements can be made to update new salary every second
     Parameters:
     ----------
