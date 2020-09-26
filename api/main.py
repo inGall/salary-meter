@@ -138,6 +138,8 @@ def getTimeWorkedForTheDay(work_timings):
     # print("Current time now is:", curr_date.hour, ":", curr_date.minute)
     if time < start_time:
         worked_time = 0
+    elif time >= start_time and time < break_start_time:
+        worked_time = time - start_time
     elif time >= break_start_time and time < break_end_time:
         worked_time = break_start_time - start_time
     elif time >= break_end_time and time <= end_time:
