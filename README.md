@@ -2,6 +2,8 @@
 
 A simple web dashboard for computing current salary earned in the month
 
+![Image of Website](./src/images/ui.png)
+
 ### Usage
 
 1. Clone repository to local directory
