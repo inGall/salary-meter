@@ -29,7 +29,7 @@ function Salarymeter(props) {
 
   return (
     <div className="salarymeter-container">
-      <p>Your current salary is ${work_info}</p>
+      <p style={{ paddingTop: '10px' }}>Your current salary is ${work_info}</p>
     </div>
   );
 }

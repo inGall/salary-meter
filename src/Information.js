@@ -60,7 +60,7 @@ class Information extends React.Component {
           </Form.Group>
           <Form.Group as={Row} className="info-group">
             <Form.Label column sm="4">
-              Start Work time:{' '}
+              Start Work time (hhmm):{' '}
             </Form.Label>
             <Col sm="5">
               <Form.Control
@@ -73,7 +73,7 @@ class Information extends React.Component {
           </Form.Group>
           <Form.Group as={Row} className="info-group">
             <Form.Label column sm="4">
-              End Work time:{' '}
+              End Work time (hhmm):{' '}
             </Form.Label>
             <Col sm="5">
               <Form.Control
@@ -86,7 +86,7 @@ class Information extends React.Component {
           </Form.Group>
           <Form.Group as={Row} className="info-group">
             <Form.Label column sm="4">
-              Start Break time:{' '}
+              Start Break time (hhmm):{' '}
             </Form.Label>
             <Col sm="5">
               <Form.Control
@@ -99,7 +99,7 @@ class Information extends React.Component {
           </Form.Group>
           <Form.Group as={Row} className="info-group">
             <Form.Label column sm="4">
-              End break time:{' '}
+              End break time (hhmm):{' '}
             </Form.Label>
             <Col sm="5">
               <Form.Control

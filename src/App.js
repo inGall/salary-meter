@@ -34,7 +34,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="app">
+        <br />
+        <h1 className="title">Calculate your salary below!</h1>
         <Information handleSubmit={this.getInfo}></Information>
         <Salarymeter info={this.state.info} />
       </div>
